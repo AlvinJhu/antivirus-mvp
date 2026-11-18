@@ -1,6 +1,8 @@
-# AntivirusMVP 防毒
+# AntivirusMVP 防毒 v0.1.0 Beta
 
-Windows 10／11 桌面防毒工具（學習專案），Python 撰寫，搭配開源 ClamAV 引擎。
+> ⚠️ **Beta 測試版**：個人學習專案，**不能取代 Windows Defender**。請保持原有防毒軟體開啟。
+
+Windows 10／11 桌面防毒工具，Python 撰寫，搭配開源 ClamAV 引擎。
 屬於「按需掃描」，可以和 Windows Defender 同時使用，不會衝突。
 
 ## 功能
@@ -14,13 +16,44 @@ Windows 10／11 桌面防毒工具（學習專案），Python 撰寫，搭配開
 | 紀錄 | 每次掃描的時間、檔案數、威脅數 |
 | 設定 | 更新病毒碼、Safe Browsing 金鑰 |
 
+## 限制
+
+- **沒有即時防護**：只在手動掃描或資料夾監控時檢查，無法阻擋正在執行的惡意程式
+- 沒有行為偵測、勒索軟體防護、防火牆、雲端威脅情資
+- 偵測能力取決於 ClamAV 病毒碼：可能漏掉威脅，也可能誤判正常檔案
+- 安裝程式尚未數位簽章，Windows SmartScreen 會顯示警告
+- 只支援 64 位元 Windows 10／11
+
+## 免責聲明
+
+本軟體依「現狀」提供，不附帶任何明示或默示保證。作者與貢獻者對因使用或無法使用本軟體所產生的任何損害
+（包括資料遺失、檔案被隔離或刪除、系統故障、未偵測到的惡意程式所造成的損失）概不負責。
+隔離或刪除檔案前，請自行確認並備份重要資料。完整條款見 [packaging/EULA.txt](packaging/EULA.txt)，安裝時需同意。
+
+## 隱私
+
+- 檔案掃描完全在本機進行，不上傳檔案
+- 更新病毒碼時連線到 ClamAV 官方伺服器
+- 只有填入 Google Safe Browsing 金鑰並使用「網址檢查」時，輸入的網址才會送到 Google
+
 ## 下載安裝程式
+
+正式下載請到 [Releases](https://github.com/AlvinJhu/antivirus-mvp/releases)，每個版本都附 `SHA256SUMS.txt`。
+下載後可在 PowerShell 驗證檔案沒被竄改：
+
+```
+Get-FileHash .\AntivirusMVP-Setup-0.1.0-beta.exe
+```
+
+輸出的 Hash 應與 `SHA256SUMS.txt` 相同（大小寫不拘）。
+
+開發中的最新版本：
 
 GitHub 的 Windows 主機會自動測試並打包：
 
 1. 到 [Actions](https://github.com/AlvinJhu/antivirus-mvp/actions) 點最新一次成功的「測試與打包」
-2. 在頁面下方 **Artifacts** 下載 `AntivirusMVP-Setup`，解壓縮後執行 `AntivirusMVP-Setup-x.y.z.exe`
-3. 推送 `v0.1.0` 這類標籤時，安裝程式也會放到 [Releases](https://github.com/AlvinJhu/antivirus-mvp/releases)
+2. 在頁面下方 **Artifacts** 下載 `AntivirusMVP-Setup`，解壓縮後執行 `AntivirusMVP-Setup-x.y.z.exe`，閱讀並同意使用條款
+3. 推送 `v0.1.0-beta` 這類標籤時，安裝程式與 SHA-256 會自動發佈到 Releases
 
 安裝程式不需要系統管理員權限，安裝到 `%LOCALAPPDATA%\Programs\AntivirusMVP`。
 第一次開啟會自動下載 ClamAV 病毒碼（數百 MB，需要幾分鐘）。

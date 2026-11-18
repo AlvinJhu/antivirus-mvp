@@ -2,12 +2,13 @@
 ; 以一般使用者權限安裝到 %LOCALAPPDATA%\Programs，不需要系統管理員權限。
 
 #ifndef AppVersion
-  #define AppVersion "0.1.0"
+  #define AppVersion "0.1.0-beta"
 #endif
 
 [Setup]
 AppId={{620AB0C3-6854-4528-9C9E-6C461E441C4D}
 AppName=AntivirusMVP
+AppVerName=AntivirusMVP {#AppVersion}
 AppVersion={#AppVersion}
 AppPublisher=Alvin Jhu
 AppPublisherURL=https://github.com/AlvinJhu/antivirus-mvp
@@ -22,7 +23,7 @@ Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
 UninstallDisplayIcon={app}\AntivirusMVP.exe
-LicenseFile=..\build\THIRD_PARTY_NOTICES.txt
+LicenseFile=EULA.txt
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -34,6 +35,7 @@ Name: "desktopicon"; Description: "建立桌面捷徑 (Create a desktop shortcut
 Source: "..\dist\AntivirusMVP\*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
 Source: "..\build\clamav\*"; DestDir: "{app}\clamav"; Flags: recursesubdirs ignoreversion
 Source: "..\build\THIRD_PARTY_NOTICES.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "EULA.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\LICENSE"; DestDir: "{app}"; DestName: "LICENSE.txt"; Flags: ignoreversion
 
 [Icons]

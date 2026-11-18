@@ -12,7 +12,7 @@ from tkinter import filedialog, messagebox, ttk
 from scanner.monitor import FolderMonitor
 from scanner.service import AppService
 
-APP_TITLE = "AntivirusMVP 防毒"
+APP_TITLE = "AntivirusMVP 防毒 v0.1.0 Beta"
 
 
 class App:
