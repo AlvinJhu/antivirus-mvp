@@ -1,0 +1,93 @@
+name: 測試與打包
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安裝套件
+        run: python -m pip install -r requirements-build.txt
+
+      - name: 單元測試
+        run: python -m pytest -q
+
+      - name: 下載 ClamAV（驗證 SHA-256）
+        run: python packaging/fetch_clamav.py build/clamav
+
+      - name: ClamAV 實機測試（EICAR 只走記憶體，不寫入硬碟）
+        continue-on-error: true
+        run: |
+          $db = "build/test-db"
+          New-Item -ItemType Directory -Force $db | Out-Null
+          "DatabaseDirectory $((Resolve-Path $db).Path)`nDatabaseMirror database.clamav.net" | Set-Content -Encoding ascii "$db/freshclam.conf"
+          build/clamav/freshclam.exe --config-file="$db/freshclam.conf" --stdout
+          $e = 'X5O!P%@AP[4\PZX54(P^)7CC)7}' + '$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!' + '$H+H*'
+          $out = $e | build/clamav/clamscan.exe --database="$db" --no-summary -
+          Write-Output $out
+          if ($out -notmatch 'FOUND') { throw "ClamAV 沒有偵測到 EICAR" }
+
+      - name: 打包成 .exe（PyInstaller）
+        run: >
+          pyinstaller --noconfirm --clean --windowed --name AntivirusMVP
+          --add-data "signatures;signatures"
+          antivirus_mvp.py
+
+      - name: 打包後的 .exe 冒煙測試
+        run: |
+          $p = Start-Process dist/AntivirusMVP/AntivirusMVP.exe -PassThru
+          Start-Sleep -Seconds 8
+          if ($p.HasExited) { throw "程式啟動後立即結束（代碼 $($p.ExitCode)）" }
+          Stop-Process -Id $p.Id
+
+      - name: 製作安裝程式（Inno Setup）
+        run: |
+          Copy-Item packaging/THIRD_PARTY_NOTICES.txt build/
+          $version = "0.1.0"
+          if ("${{ github.ref_type }}" -eq "tag") { $version = "${{ github.ref_name }}".TrimStart("v") }
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress; }
+          & $iscc "/DAppVersion=$version" packaging/installer.iss
+          if ($LASTEXITCODE -ne 0) { throw "Inno Setup 失敗" }
+          Get-ChildItem dist/*.exe
+
+      - name: 安裝程式實測（靜默安裝 → 啟動 → 解除安裝）
+        run: |
+          $setup = Get-ChildItem dist/AntivirusMVP-Setup-*.exe | Select-Object -First 1
+          Start-Process $setup.FullName -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait
+          $app = "$env:LOCALAPPDATA\Programs\AntivirusMVP"
+          foreach ($f in "AntivirusMVP.exe","clamav\clamscan.exe","clamav\freshclam.exe","THIRD_PARTY_NOTICES.txt") {
+            if (-not (Test-Path "$app\$f")) { throw "安裝後找不到 $f" }
+          }
+          & "$app\unins000.exe" /VERYSILENT /SUPPRESSMSGBOXES | Out-Null
+          Start-Sleep -Seconds 5
+          if (Test-Path "$app\AntivirusMVP.exe") { throw "解除安裝後檔案仍存在" }
+
+      - name: 上傳安裝程式
+        uses: actions/upload-artifact@v4
+        with:
+          name: AntivirusMVP-Setup
+          path: dist/AntivirusMVP-Setup-*.exe
+          retention-days: 30
+
+      - name: 發佈到 Releases（推送 v* 標籤時）
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${{ github.ref_name }}" dist/AntivirusMVP-Setup-*.exe --title "${{ github.ref_name }}" --notes "Windows 安裝程式（未簽章，首次執行 SmartScreen 會警告）"
+    permissions:
+      contents: write

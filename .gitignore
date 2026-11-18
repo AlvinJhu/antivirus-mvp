@@ -4,3 +4,6 @@ __pycache__/
 quarantine/
 *.db
 .env
+build/
+dist/
+*.spec
