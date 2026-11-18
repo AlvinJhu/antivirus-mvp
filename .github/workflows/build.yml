@@ -10,6 +10,8 @@ on:
 jobs:
   windows:
     runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"  # Windows 主控台預設 cp1252，印中文會出錯
     defaults:
       run:
         shell: pwsh
