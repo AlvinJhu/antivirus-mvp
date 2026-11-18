@@ -26,7 +26,7 @@ jobs:
         run: python -m pip install -r requirements-build.txt
 
       - name: 單元測試
-        run: python -m pytest -q
+        run: python -m pytest -q -rs
 
       - name: 下載 ClamAV（驗證 SHA-256）
         run: python packaging/fetch_clamav.py build/clamav
@@ -41,7 +41,8 @@ jobs:
           $e = 'X5O!P%@AP[4\PZX54(P^)7CC)7}' + '$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!' + '$H+H*'
           $out = $e | build/clamav/clamscan.exe --database="$db" --no-summary -
           Write-Output $out
-          if ($out -notmatch 'FOUND') { throw "ClamAV 沒有偵測到 EICAR" }
+          if ($out -notmatch 'Eicar.*FOUND') { throw "ClamAV 沒有偵測到 EICAR" }
+          exit 0  # clamscan 發現威脅時回傳 1，這裡是預期結果
 
       - name: 打包成 .exe（PyInstaller）
         run: >
