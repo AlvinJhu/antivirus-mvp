@@ -62,5 +62,6 @@ python -m scanner <路徑>     # 命令列掃描
 
 ## 授權
 
-內含的 ClamAV 以 GNU GPL v2 授權，說明見 `packaging/THIRD_PARTY_NOTICES.txt`。
+本專案為免費開源軟體，以 [GNU GPL v2](LICENSE) 授權：任何人都可以免費使用、修改、散布，但散布修改版時也必須公開原始碼並採用相同授權。
+內含的 ClamAV 同樣以 GNU GPL v2 授權，說明見 `packaging/THIRD_PARTY_NOTICES.txt`。
 Google Safe Browsing API 僅限非商業用途。

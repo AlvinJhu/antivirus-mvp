@@ -73,7 +73,7 @@ jobs:
           $setup = Get-ChildItem dist/AntivirusMVP-Setup-*.exe | Select-Object -First 1
           Start-Process $setup.FullName -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait
           $app = "$env:LOCALAPPDATA\Programs\AntivirusMVP"
-          foreach ($f in "AntivirusMVP.exe","clamav\clamscan.exe","clamav\freshclam.exe","THIRD_PARTY_NOTICES.txt") {
+          foreach ($f in "AntivirusMVP.exe","clamav\clamscan.exe","clamav\freshclam.exe","THIRD_PARTY_NOTICES.txt","LICENSE.txt") {
             if (-not (Test-Path "$app\$f")) { throw "安裝後找不到 $f" }
           }
           & "$app\unins000.exe" /VERYSILENT /SUPPRESSMSGBOXES | Out-Null

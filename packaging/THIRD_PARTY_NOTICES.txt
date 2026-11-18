@@ -1,6 +1,10 @@
 ﻿AntivirusMVP 防毒 — 第三方元件說明 / Third-party notices
 ==========================================================
 
+AntivirusMVP 為免費開源軟體，以 GNU GPL v2 授權（全文見安裝資料夾 LICENSE.txt）。
+原始碼：https://github.com/AlvinJhu/antivirus-mvp
+AntivirusMVP is free software licensed under the GNU GPL v2.
+
 本程式為學習用途的防毒工具，按需掃描檔案，可與 Windows Defender 等防毒軟體同時使用。
 This is an on-demand scanner intended for learning; it can run alongside Windows Defender.
 

@@ -34,6 +34,7 @@ Name: "desktopicon"; Description: "建立桌面捷徑 (Create a desktop shortcut
 Source: "..\dist\AntivirusMVP\*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion
 Source: "..\build\clamav\*"; DestDir: "{app}\clamav"; Flags: recursesubdirs ignoreversion
 Source: "..\build\THIRD_PARTY_NOTICES.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\LICENSE"; DestDir: "{app}"; DestName: "LICENSE.txt"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\AntivirusMVP 防毒"; Filename: "{app}\AntivirusMVP.exe"
