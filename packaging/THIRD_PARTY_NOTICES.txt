@@ -1,0 +1,22 @@
+﻿AntivirusMVP 防毒 — 第三方元件說明 / Third-party notices
+==========================================================
+
+AntivirusMVP 為免費開源軟體，以 GNU GPL v2 授權（全文見安裝資料夾 LICENSE.txt）。
+原始碼：https://github.com/AlvinJhu/antivirus-mvp
+AntivirusMVP is free software licensed under the GNU GPL v2.
+
+本程式為學習用途的防毒工具，按需掃描檔案，可與 Windows Defender 等防毒軟體同時使用。
+This is an on-demand scanner intended for learning; it can run alongside Windows Defender.
+
+1. ClamAV 1.5.4
+   版權：Cisco Systems, Inc. 及貢獻者
+   授權：GNU General Public License v2（見安裝資料夾 clamav\COPYING.txt 與 clamav\COPYING\）
+   原始碼：https://github.com/Cisco-Talos/clamav/tree/clamav-1.5.4
+   本程式以獨立執行檔方式呼叫 clamscan.exe / freshclam.exe，未修改 ClamAV。
+
+2. Python 3.12 — Python Software Foundation License
+3. watchdog — Apache License 2.0
+4. PyInstaller bootloader — GPL v2 with bootloader exception
+
+病毒碼由 ClamAV 官方伺服器（database.clamav.net）下載，首次開啟程式時自動更新。
+網址檢查可選用 Google Safe Browsing API（僅限非商業用途）。

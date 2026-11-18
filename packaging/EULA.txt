@@ -1,0 +1,36 @@
+﻿AntivirusMVP 防毒 v0.1.0 Beta — 使用條款與免責聲明
+AntivirusMVP v0.1.0 Beta — Terms of Use and Disclaimer
+==========================================================
+
+請詳閱以下內容。選擇「I accept the agreement」並繼續安裝，即表示您同意本條款。
+Please read carefully. By accepting and continuing, you agree to these terms.
+
+一、Beta 測試版
+本軟體為 Beta（測試）版本，是個人學習專案，可能含有錯誤，功能與介面可能隨時變更。
+
+二、功能限制
+1. 本軟體只做「按需掃描」與「資料夾監控」，沒有即時防護，無法阻擋正在執行的惡意程式。
+2. 不能取代 Windows Defender 或其他商業防毒軟體，請保持原有防毒軟體開啟。
+3. 沒有行為偵測、勒索軟體防護、防火牆或雲端威脅情資。
+4. 偵測能力取決於 ClamAV 病毒碼，無法保證偵測所有威脅，也可能誤判正常檔案。
+5. 安裝程式尚未數位簽章，Windows SmartScreen 可能顯示警告。
+
+三、免責聲明
+本軟體依「現狀」提供，不附帶任何明示或默示保證，包括但不限於適售性、特定用途適用性及不侵權之保證。
+作者與貢獻者對於因使用或無法使用本軟體所產生的任何損害（包括資料遺失、檔案被隔離或刪除、系統故障、
+未偵測到的惡意程式所造成的損失）概不負責。隔離或刪除檔案前，請自行確認並備份重要資料。
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE
+AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DAMAGES, INCLUDING DATA LOSS OR UNDETECTED MALWARE, ARISING FROM
+THE USE OF OR INABILITY TO USE THIS SOFTWARE.
+
+四、隱私
+1. 檔案掃描完全在您的電腦上進行，不會上傳檔案。
+2. 更新病毒碼時會連線到 ClamAV 官方伺服器（database.clamav.net）。
+3. 只有在您填入 Google Safe Browsing 金鑰並使用「網址檢查」時，所輸入的網址才會送到 Google 查詢。
+
+五、授權
+本軟體為免費開源軟體，以 GNU General Public License v2 授權（全文見安裝資料夾 LICENSE.txt）。
+原始碼：https://github.com/AlvinJhu/antivirus-mvp
+內含 ClamAV 1.5.4（GPL v2，Cisco Systems, Inc.），第三方元件說明見 THIRD_PARTY_NOTICES.txt。
+Google Safe Browsing API 僅限非商業用途。
