@@ -1,17 +1,19 @@
 from scanner.engine import scan_path
-from scanner.signatures import load_signatures, DEFAULT_SIGNATURES
+from scanner.signatures import load_signatures
+
+from conftest import FAKE_THREAT
 
 
-def test_scan_folder_finds_only_eicar(sample_dir):
-    results = scan_path(sample_dir, load_signatures(DEFAULT_SIGNATURES))
+def test_scan_folder_finds_only_fake_malware(sample_dir, test_signatures):
+    results = scan_path(sample_dir, load_signatures(test_signatures))
     infected = [r for r in results if r.infected]
     assert len(results) == 2
-    assert [r.path.name for r in infected] == ["eicar.com"]
-    assert infected[0].threat == "EICAR-Test-File"
+    assert [r.path.name for r in infected] == ["fake_malware.bin"]
+    assert infected[0].threat == FAKE_THREAT
 
 
-def test_scan_single_file(sample_dir):
-    results = scan_path(sample_dir / "clean.txt", load_signatures(DEFAULT_SIGNATURES))
+def test_scan_single_file(sample_dir, test_signatures):
+    results = scan_path(sample_dir / "clean.txt", load_signatures(test_signatures))
     assert len(results) == 1 and not results[0].infected
 
 
